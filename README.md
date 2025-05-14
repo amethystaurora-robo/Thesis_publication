@@ -14,6 +14,33 @@ A look at the overall workflow is below.
 
 And a look at the specific coding steps in case anyone wants to reuse the pipeline.
 
-This pipeline requires data in a specific format. (I'm not able to share the data I used, since it belongs to an industry partner.) This is transcriptomic data from an organism, the gene names for the organism, 
+This pipeline requires data input data-I'm not allowed to share the data that I used. It makes use of transcriptomic and metabolomic data, although the majority of the analysis is conducted on the transcriptome. The transcriptomic data included 29134 genes, with genes in rows and samples in columns. The samples in this case were a combination of dose level of ethoprophos (a high dose ethoprophos and a low dose ethoprophos), dosed on the organism at 9 timepoints. A separate metadata sheet was included to map column names to specific dose levels and time points. The structure of my data is illustrated below.
+
+The first step was visualising and pre-processing the data, in files ... and ... The output from ... is then passed to the DeSeq2 analysis portion. DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa.
+
+The LRT identified 2,967 upregulated and 3,868 downregulated genes showing significant changes at the dose × time interaction level.
+
+To interpret these results in detail, I performed Wald tests to identify DEGs at each dose level for each timepoint (a total of 18 comparisons: 9 timepoints × 2 doses).
+
+I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information.
+
+Finally, I visualised how these enriched pathways change over time and across dose levels using Tableau, combining the results into a dynamic, interpretable format. The visualisation highlights how specific biological pathways respond differently depending on the dose and the time of exposure.
+
+Note: Daphnia magna genes were mapped to pathways by aligning them to homologous human genes or KEGG Orthology (KO) terms. Due to evolutionary divergence and incomplete annotation, not all Daphnia genes could be mapped, resulting in a reduced gene set used for pathway analysis.
+
+TODO: 
+WGCNA
+DynGENIE3
+Fix WGCNA visual
+Add DeSeq2 visuals
+Add versions
+Add filtering at each step
+Add specific file names to other specific file names
+Metabolomics section
+MOFA
+
+
+
+
 
 
