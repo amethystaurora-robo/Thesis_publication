@@ -16,15 +16,23 @@ And a look at the specific coding steps in case anyone wants to reuse the pipeli
 
 This pipeline requires data input data-I'm not allowed to share the data that I used. It makes use of transcriptomic and metabolomic data, although the majority of the analysis is conducted on the transcriptome. The transcriptomic data included 29134 genes, with genes in rows and samples in columns. The samples in this case were a combination of dose level of ethoprophos (a high dose ethoprophos and a low dose ethoprophos), dosed on the organism at 9 timepoints. A separate metadata sheet was included to map column names to specific dose levels and time points. The structure of my data is illustrated below.
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/High%20dose.png"/>
+</p>
+
 The first step was visualising and pre-processing the data, in files ... and ... The output from ... is then passed to the DeSeq2 analysis portion. DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa.
 
 The LRT identified 2,967 upregulated and 3,868 downregulated genes showing significant changes at the dose × time interaction level.
 
-To interpret these results in detail, I performed Wald tests to identify DEGs at each dose level for each timepoint (a total of 18 comparisons: 9 timepoints × 2 doses).
+To interpret these results in detail, I performed Wald tests to identify DEGs at each dose level for each timepoint (a total of 18 comparisons: 9 timepoints × 2 doses). The 18 DEGs are saved to 18 files, beginning with ... I recommend saving them in a folder. The pre-processing step in ... will access the folder.
 
-I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information.
+I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information, after pre-processing the files in ... Next, post-processing file ... is used to put all the genes in one dataset again. This file also filters the lists to the ones we care about - the ones showing significant changes at the dose x time interaction level from LRT. 
 
 Finally, I visualised how these enriched pathways change over time and across dose levels using Tableau, combining the results into a dynamic, interpretable format. The visualisation highlights how specific biological pathways respond differently depending on the dose and the time of exposure.
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/ES_over_time.png"/>
+</p>
 
 Note: Daphnia magna genes were mapped to pathways by aligning them to homologous human genes or KEGG Orthology (KO) terms. Due to evolutionary divergence and incomplete annotation, not all Daphnia genes could be mapped, resulting in a reduced gene set used for pathway analysis.
 
@@ -32,7 +40,6 @@ TODO:
 WGCNA
 DynGENIE3
 Fix WGCNA visual
-Add DeSeq2 visuals
 Add versions
 Add filtering at each step
 Add specific file names to other specific file names
