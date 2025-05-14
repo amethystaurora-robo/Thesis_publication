@@ -2,31 +2,31 @@
 
 ## Introduction
 
-This study looks at the organophosphate pesticide, ethoprophos. As prevalence of ethoprophos increases in the environment, humans are increasingly at risk for exposure. You can imagine that pesticides which are used to kill organisms (in this case, the target is nematode worms) also have effects on other organisms. In this case, exposure to ethoprophos has been linked to physiological disturbances in earthworms, neurobehavioral impairments in rats, and in one case study, seizures in a human child.
+Pesticides are used to kill pests, but they affect other organisms. As environmental prevalence of the organophosphate pesticide, ethoprophos, increases, risk of exposure increases. Exposure to ethoprophos has been linked to physiological disturbances in earthworms, neurobehavioral impairments in rats, and in one case study, seizures in a human child.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/non-target_organisms.png">
 </p>
 
-"Safe" levels of chemicals are determined in part through a scientific process known as toxicity testing. A model organism (in this case the water flea, Daphnia magna) is dosed with the chemical of interest under experimental conditions. In the past, the organism was observed and its behavioral changes, reproduction, or lifespan was recorded. Since the advent of high-throughput technologies, we are now able to extract the entirety of an organism's genome or gene expression. This can give much more insight into the causes of behavioral or reproduction changes, by showing the exact cellular mechanisms which may be triggering a reaction to the chemical.
+Toxicity testing can help determine what level of exposure is "safe" in the environment. To conduct a test, a model organism (like the water flea, *Daphnia magna*, shown below) is dosed with the chemical of interest in a lab. In the past, the organism was observed and its behavioral changes, reproduction, or lifespan was recorded. Now, high-throughput 'omics technologies allow for complete extraction of gene expression data, allowing insight into cellular mechanisms which cause observed changes.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/Modern%20method.png">
 </p>
 
-However, this high-throughput data is HUGE (in this case, over 15k genes). And many times, the data is high-dimensional, with multiple doses at multiple timepoints. A huge and complex dataset needs a complex pipeline to analyze it. This field of toxicology has been somewhat slower in adopting some of these complex pipeline formats, particularly machine learning. In this study, I demonstrate the use of complex Graph machine learning algorithms coupled with statistical analysis to provide a complete modelling pipeline for complex temporal data. Although I won't share my full biological interpretation results here, I have proven that this pipeline is successful by backing it up with existing literature. We are working on publishing this case study!
+However, this high-throughput data is HUGE. And many times, the data is high-dimensional, with multiple doses at multiple timepoints. A huge and complex dataset needs a complex pipeline to analyze it. In this study, I demonstrate the use of complex Graph ML alongside statistical analysis to provide a pipeline for temporal omics data. Although I won't share my full biological interpretation results here, I have proven that this pipeline is successful by backing it up with existing literature. We are working on publishing this case study!
 
 ## Methods
 
-A look at the overall workflow is below.
-
-And a look at the specific coding steps in case anyone wants to reuse the pipeline.
-
-This pipeline requires data input data-I'm not allowed to share the data that I used. It makes use of transcriptomic and metabolomic data, although the majority of the analysis is conducted on the transcriptome. The transcriptomic data included 29134 genes, with genes in rows and samples in columns. The samples in this case were a combination of dose level of ethoprophos (a high dose ethoprophos and a low dose ethoprophos), dosed on the organism at 9 timepoints. A separate metadata sheet was included to map column names to specific dose levels and time points. The structure of my data is illustrated below.
+This pipeline requires input transcriptomic and metabolomic data (the data I used is confidential). Genes should be in rows and samples in columns. A separate metadata sheet was included to map column names to specific dose levels and time points. My data looked at 2 doses of ethoprophos (a high and low dose), with the transcriptome and metabolome extracted at 9 timepoints. The structure of my data is illustrated below.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/High%20dose.png"/>
 </p>
+
+A look at the overall workflow is below.
+
+And a look at the specific coding steps in case anyone wants to reuse the pipeline.
 
 The first step was visualising and pre-processing the data, in files ... and ... The output from ... is then passed to the DeSeq2 analysis portion. DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa.
 
