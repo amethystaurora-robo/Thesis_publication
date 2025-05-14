@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Pesticides are used to kill pests, but they affect other organisms. As environmental prevalence of the organophosphate pesticide, ethoprophos, increases, risk of exposure increases. Exposure to ethoprophos has been linked to physiological disturbances in earthworms, neurobehavioral impairments in rats, and in one case study, seizures in a human child.
+Pesticides are used to kill pests, but they affect other organisms. As the prevalence of the organophosphate pesticide, ethoprophos, increases in the environment, risk of exposure increases for non-target organisms. Exposure to ethoprophos has been linked to physiological disturbances in earthworms, neurobehavioral impairments in rats, and in one case study, seizures in a human child.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/non-target_organisms.png">
