@@ -4,6 +4,10 @@ Introduction
 
 This study looks at the organophosphate pesticide, ethoprophos. As prevalence of ethoprophos increases in the environment, humans are increasingly at risk for exposure. You can imagine that pesticides which are used to kill organisms (in this case, the target is nematode worms) also have effects on other organisms. In this case, exposure to ethoprophos has been linked to physiological disturbances in earthworms, neurobehavioral impairments in rats, and in one case study, seizures in a human child.
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/non-target_organisms.png">
+</p>
+
 "Safe" levels of chemicals are determined in part through a scientific process known as toxicity testing. A model organism (in this case the water flea, Daphnia magna) is dosed with the chemical of interest under experimental conditions. In the past, the organism was observed and its behavioral changes, reproduction, or lifespan was recorded. Since the advent of high-throughput technologies, we are now able to extract the entirety of an organism's genome or gene expression. This can give much more insight into the causes of behavioral or reproduction changes, by showing the exact cellular mechanisms which may be triggering a reaction to the chemical.
 
 However, this high-throughput data is HUGE (in this case, over 15k genes). And many times, the data is high-dimensional, with multiple doses at multiple timepoints. A huge and complex dataset needs a complex pipeline to analyze it. This field of toxicology has been somewhat slower in adopting some of these complex pipeline formats, particularly machine learning. In this study, I demonstrate the use of complex Graph machine learning algorithms coupled with statistical analysis to provide a complete modelling pipeline for complex temporal data. Although I won't share my full biological interpretation results here, I have proven that this pipeline is successful by backing it up with existing literature. We are working on publishing this case study!
