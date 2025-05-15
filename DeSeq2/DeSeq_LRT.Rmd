@@ -72,8 +72,62 @@ dds_lrt <- DESeq(dds, test = "LRT", reduced = reduced_model)
 ```{r}
 lrt_results <- results(dds_lrt)
 summary(lrt_results)
+
 ```
 ```{r}
+# Filter for significantly differentially expressed genes (adjusted p < 0.05)
+sig_genes <- lrt_results[which(lrt_results$padj < 0.05), ]
+
+# Optionally, remove rows with NA padj
+sig_genes <- sig_genes[!is.na(sig_genes$padj), ]
+
+# Turn into data frame
+sig_genes_df <- as.data.frame(sig_genes)
+
+# View top rows
+head(sig_genes_df)
+dim(sig_genes_df)
+write.csv(sig_genes_df,'LRT_sig_genes.csv')
+```
+
+```{r}
+#Use Wald test to find DEGs at each dose level and timepoint
+
+# Make sure your metadata is set up
+sample_sheet$treatment <- factor(sample_sheet$treatment, levels = c("control", "low", "high"))
+sample_sheet$time_point <- factor(sample_sheet$time_point)
+
+# Get all unique time points
+time_points <- unique(sample_sheet$time_point)
+
+# Loop through each time point
+for (tp in time_points) {
+  
+  # Subset metadata and counts
+  subset_meta <- sample_sheet[sample_sheet$time_point == tp, ]
+  subset_counts <- read_counts[, rownames(subset_meta)]
+
+  # Create DESeq2 dataset for this time point
+  dds_tp <- DESeqDataSetFromMatrix(countData = subset_counts,
+                                   colData = subset_meta,
+                                   design = ~ treatment)
+  
+  # Run DESeq
+  dds_tp <- DESeq(dds_tp)
+
+  # Compare low vs control
+  if (sum(subset_meta$treatment %in% c("control", "low")) >= 2) {
+    res_low <- results(dds_tp, contrast = c("treatment", "low", "control"))
+    write.csv(as.data.frame(res_low), paste0("DeSeq2 Results/DESeq2_low_vs_control_", tp, ".csv"))
+  }
+
+  # Compare high vs control
+  if (sum(subset_meta$treatment %in% c("control", "high")) >= 2) {
+    res_high <- results(dds_tp, contrast = c("treatment", "high", "control"))
+    write.csv(as.data.frame(res_high), paste0("DeSeq2 Results/DESeq2_high_vs_control_", tp, ".csv"))
+  }
+}
+
 
 ```
 
