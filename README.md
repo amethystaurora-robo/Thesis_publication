@@ -36,12 +36,13 @@ The transcriptomic portion of the analysis comes in 4 basic steps.
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/overall_workflow.png"/>
 </p>
 
-A more detailed look at the workflow for this data is shown below.
-
-The specific file input and output is shown below. 
-
 #### Step 1: Pre-processing and Visualisation
-The first step was visualising and pre-processing the data. Load the data into *pre-processing_visualization.ipynb* to get an overall look at the data with violin charts, boxplots, line graphs, and PCA scatterplots. Next, raw transcriptomic data and metadata are pre-processed in *rna_preproc.r* to prepare for statistical analysis. The output of this file is *sample_sheet_filtered.csv* (metadata) and *flt_counts_filtered.csv* (read counts), used for statistical analysis. Counts are further normalized and stabilized, and the output titled *flt_counts_vst.csv* is passed to *WGCNA.r* for clustering into shared co-expression patterns.
+An overall look at the file order for pre-processing, statistical analysis and annotation is shown below:
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/pre-proc-viz-methods.png"/>
+</p>
+
+The first step was visualising and pre-processing the data. Load the data into *pre-processing_visualization.ipynb* to get an overall look at the data with violin charts, boxplots, line graphs, and PCA scatterplots. Next, raw transcriptomic data and metadata are pre-processed in *rna_preproc.r* to prepare for statistical analysis. The output of this file is *sample_sheet_filtered.csv* (metadata) and *flt_counts_filtered.csv* (read counts), used for statistical analysis. Counts are further normalized and stabilized, and the output titled *rna_vst_proc.csv* is passed to *WGCNA.r* for clustering into shared co-expression patterns.
 
 #### Step 2: Statistical Analysis
 The outputs of *rna_preproc.r* - *sample_sheet_filtered.csv* and *flt_counts_filtered.csv* are loaded into *Deseq_LRT.Rmd* for statistical testing. (Don't use the normalized and stabilized versions, since DeSeq2 has its own normalization method.)
@@ -84,14 +85,17 @@ Finally, I visualised how these enriched pathways change over time and across do
 *Note: Daphnia magna genes were mapped to pathways by aligning them to homologous human genes or KEGG Orthology (KO) terms. Due to evolutionary divergence and incomplete annotation, not all Daphnia genes could be mapped, resulting in a reduced gene set used for pathway analysis.*
 
 #### Step 4: Co-Expression Clustering
+
 #### Step 5: (GRN)
 TODO: 
+Add workflow for statistical analysis and annotation (2)
+Fix overall workflow - I don't love the captions
+Also fix blastkoala workflow - it's not very pretty.
+I think no need for big workflow since we have the overall steps.
 WGCNA
 DynGENIE3
 Fix WGCNA visual
-Add versions
-Add filtering at each step
-Add specific file names to other specific file names
+Add versions, requirements include what versions, access to HPC, access to Jupyter notebook
 Metabolomics section
 MOFA
 
