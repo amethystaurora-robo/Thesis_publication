@@ -26,6 +26,10 @@ This pipeline requires input transcriptomic and metabolomic data (the data I use
 
 A look at the overall workflow is below.
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/overall_workflow.png"/>
+</p>
+
 And a look at the specific coding steps in case anyone wants to reuse the pipeline.
 
 The first step was visualising and pre-processing the data, in files ... and ... The output from ... is then passed to the DeSeq2 analysis portion. DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa.
