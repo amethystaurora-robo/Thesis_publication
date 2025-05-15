@@ -126,11 +126,11 @@ datExpr <- as.data.frame(datExpr)
 MEs <- moduleEigengenes(datExpr, colors = moduleColorAssignments)$eigengenes
 
 # Define the color names
-color_names <- c("Red", "Slate Blue", "Sea Green", "Grey-Green", "Pinkish Red",
-                 "Dark Orange", "Bright Yellow", "Brown", "Salmon Pink", "Light Purple",
-                 "Soft Green", "Turquoise", "Light Peach", "Dark Lavender", "Light Purple",
-                 "Beige", "Lime Green", "Bright Yellow", "Tan", "Light Grey",
-                 "Blue Green", "Soft Green", "Light Yellow", "Lavender", "Salmon", 
+color_names <- c("Red", "Slate Blue", "Sea Green", "Grey-Green", "Brownish Red",
+                 "Dark Orange", "Bright Yellow", "Brown", "Dark Pink", "Opaque Dark Pink",
+                 "Dark Blue-Green", "Turquoise", "Light Peach", "Greyish purple", "Light Purple",
+                 "Beige", "Lime Green", "Opaque Yellow", "Tan", "Light Grey",
+                 "Blue-Green", "Soft Green", "Washed out Yellow", "Grey-Blue", "Salmon", 
                  "Dusty Purple")
 
 # Define the hex colors
