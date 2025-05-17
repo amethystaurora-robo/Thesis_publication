@@ -1,6 +1,5 @@
 '''
 This file takes the processed RNA counts and runs WGCNA to get modules.
-It filters the modules based on the DEGs returned network_processing.ipynb.
 It results in a csv with module colors ready to be visualized in Cytoscape.
 
 '''
@@ -11,29 +10,34 @@ library(RColorBrewer)
 
 #load read counts and DEGs
 read_counts_vst <- read.csv('rna_vst_proc.csv',header=FALSE)
-degs <- read.csv('gestalt_dyngenie.csv')
 
 head(read_counts_vst)
 #process data expression for WGCNA
 datExpr <- read_counts_vst[-c(1, 2), ]  # Remove the first two rows
+datExpr <- datExpr[, -1]             # Remove the first column (KEGG IDs with NANs)
+print(rownames(datExpr))
 head(datExpr)
+rownames(datExpr) <- datExpr[, 1]   # Set the second column as row names
+datExpr <-datExpr[,-1] #remove first column (Dapma IDs, now rownames)
 colnames(datExpr) <- datExpr[1, ]  # Set the first row as column names
 head(datExpr)
 datExpr <- datExpr[-1, ]            # Remove the first row
-datExpr <- datExpr[, -1]             # Remove the first column (KEGG IDs with NANs)
 head(datExpr)
-rownames(datExpr) <- datExpr[, 1]   # Set the second column as row names
 print(rownames(datExpr))
+print(colnames(datExpr))
 datExpr <- as.data.frame(t(datExpr))
 head(datExpr,2)
+sampleNames <- rownames(datExpr)
+print(sampleNames)
 datExpr <- datExpr [,-1]
-head(datExpr,2)
+head(datExpr,3)
 length(datExpr)
-
+print(as.vector(as.matrix(datExpr[2, ])))
 #convert to matrix
 datExpr <- as.matrix(datExpr)
 head(datExpr)
 print(rownames(datExpr))
+#sample_labels <- rownames(datExpr)
 length(datExpr)
 
 #Pick soft threshold
@@ -67,20 +71,8 @@ chosen_power <- 8
 adjacency = adjacency(datExpr, power = chosen_power)
 
 # Create the topological overlap matrix (TOM)
-datExpr <- datExpr[,-1]
+#datExpr <- datExpr[,-1]
 TOM = TOMsimilarity(adjacency)
-
-#get DEGs list from DynGENIE
-#degs_list <- degs$KO
-
-# Subset datExpr to only include genes in degs_list
-#clean column names so they match correctly
-#colnames(datExpr) <- gsub(";.*", "", colnames(datExpr))
-#degs_subset = which(colnames(datExpr) %in% degs_list)
-#datExpr_degs = datExpr[, degs_subset]
-# Subset adjacency and TOM to include only the genes in degs_list
-#adjacency_degs = adjacency[degs_subset, degs_subset]
-#TOM_degs = TOM[degs_subset, degs_subset]
 
 #Calculate the dissimilarity TOM
 dissTOM = 1 - TOM
@@ -116,6 +108,9 @@ print(unique(moduleColorAssignments))
 
 # 2. Create a data frame with gene names and their corresponding module colors
 geneNames = colnames(datExpr)
+#sampleNames = rownames(datExpr)
+print(sampleNames)
+print(geneNames)
 print(ncol(datExpr))
 results_df = data.frame(Gene = geneNames, ModuleColor = moduleColorAssignments)
 
@@ -124,6 +119,7 @@ datExpr <- datExpr[-1,]
 datExpr <- apply(datExpr, 2, function(x) as.numeric(as.character(x)))
 datExpr <- as.data.frame(datExpr)
 MEs <- moduleEigengenes(datExpr, colors = moduleColorAssignments)$eigengenes
+
 
 # Define the color names
 color_names <- c("Red", "Slate Blue", "Sea Green", "Grey-Green", "Brownish Red",
@@ -149,7 +145,18 @@ head(MEs)
 rownames(MEs) <- rownames(datExpr)
 rownames(datExpr)
 
-#plot heatmap of Eigengenes
+# Ensure module eigengenes and color labels are aligned
+module_colors_used <- unique(moduleColorAssignments)
+names(module_colors_used) <- NULL  # strip names if present
+
+# Map hex colors to names using color_map
+color_labels <- color_map[module_colors_used]
+
+# Fallback to hex codes if no name mapping exists
+color_labels[is.na(color_labels)] <- module_colors_used[is.na(color_labels)]
+
+
+# Plot heatmap of Module Eigengenes
 heatmap(as.matrix(MEs), 
         Rowv = NA, 
         Colv = NA, 
@@ -158,8 +165,8 @@ heatmap(as.matrix(MEs),
         margins = c(5, 10),
         xlab = "", 
         ylab = "Module Eigengenes",
-        labRow = rownames(MEs),
-        labCol = color_map[unique(moduleColors)])
+        labRow = sampleNames,
+        labCol = color_labels)
 
 
 write.csv(results_df,'gene_module_colors.csv',row.names=FALSE)
