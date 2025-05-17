@@ -47,6 +47,10 @@ The first step was visualising and pre-processing the data. Load the data into *
 #### Step 2: Statistical Analysis
 The outputs of *rna_preproc.r* - *sample_sheet_filtered.csv* and *flt_counts_filtered.csv* are loaded into *Deseq_LRT.Rmd* for statistical testing. (Don't use the normalized and stabilized versions, since DeSeq2 has its own normalization method.)
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_stat_analysis.png"/>
+</p>
+
 DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa. LRT fits a linear model (shown below) with and without the interaction term to determine significantly upregulated and downregulated genes at the interaction of dose and time compared to control.
 
 <p align="left">
@@ -59,18 +63,34 @@ To interpret these results in detail, I performed Wald tests to identify DEGs at
 
 I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information. For this step, I used KEGG ontology and human orthologs for *Daphnia magna*. These were obtained following the method below.
 
-<p align="left">
-  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/KOs.png"/>
+<p align="left" style="font-size: 16px;">
+  1. List of gene names
+  &nbsp;→&nbsp;
+  <a href="http://wfleabase.org/" target="_blank">
+    <img src="https://img.shields.io/badge/wFleaBase-018575?style=for-the-badge&logo=biomart&logoColor=white"/>
+  </a>
+  &nbsp;→&nbsp;
+  3. Amino acid sequences
+  &nbsp;→&nbsp;
+  <a href="https://www.kegg.jp/blastkoala/" target="_blank">
+    <img src="https://img.shields.io/badge/BlastKOALA%20(KEGG)-018575?style=for-the-badge&logo=tableau&logoColor=white"/>
+  </a>
+  &nbsp;→&nbsp;
+  5. KOs and TFs
 </p>
 
 *NOTE: While you obtain KOs, it will also be important to determine which are transcription factors (TFs) for the GRN building step later.*
 
 The list of KOs obtained, and the folder of *DeSeq2 Results* will be loaded into the file *gestalt_pre-processing.ipynb*. This file is used to put the genes in the correct format for Web Gestalt. (It is also used to annotate genes for the GRN in a later step-but you can skip that for now.)
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_annotation.png"/>
+</p>
+
 After pre-processing the files, use Web Gestalt to upload the files, selecting the correct orthologs and which information you would like. Access the website through the button below:
 <p align="left">
   <a href="https://www.webgestalt.org/" target="_blank">
-    <img src="https://img.shields.io/badge/Use%20WebGestalt-766090?style=for-the-badge&logo=tableau&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Use%20WebGestalt-018575?style=for-the-badge&logo=tableau&logoColor=white"/>
   </a>
 </p>
 
@@ -85,16 +105,23 @@ Finally, I visualised how these enriched pathways change over time and across do
 *Note: Daphnia magna genes were mapped to pathways by aligning them to homologous human genes or KEGG Orthology (KO) terms. Due to evolutionary divergence and incomplete annotation, not all Daphnia genes could be mapped, resulting in a reduced gene set used for pathway analysis.*
 
 #### Step 4: Co-Expression Clustering
+An important aspect of the temporal analysis was grouping genes by their shared co-expression patterns. In other words, these groups of genes are upregulated or downregulated together. This method uses a hierarchical clustering algorithm to group genes into 'modules.'
+
+Normalized and vst transformed genes, in the file *rna_vst_proc.csv* is passed to *WGCNA.r* to assign genes to different modules. This produces an output file, *genes_module_colors.csv* which is passed to *network_processing.ipynb* together with outputs from the GRN for a final visualisation. 
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_WGCNA.png"/>
+</p>
+
+In *WGCNA.R*, a heatmap is also generated to visualise shared co-expression patterns (eigengenes) by modules.
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/module_eigengenes.png"/>
+</p>
 
 #### Step 5: (GRN)
 TODO: 
-Add workflow for statistical analysis and annotation (2)
-Fix overall workflow - I don't love the captions
-Also fix blastkoala workflow - it's not very pretty.
-I think no need for big workflow since we have the overall steps.
-WGCNA
 DynGENIE3
-Fix WGCNA visual
 Add versions, requirements include what versions, access to HPC, access to Jupyter notebook
 Metabolomics section
 MOFA
