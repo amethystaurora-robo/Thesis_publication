@@ -76,7 +76,7 @@ I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these
     <img src="https://img.shields.io/badge/BlastKOALA%20(KEGG)-018575?style=for-the-badge&logo=tableau&logoColor=white"/>
   </a>
   &nbsp;→&nbsp;
-  5. KOs and TFs
+  5. KOs
 </p>
 
 *NOTE: While you obtain KOs, it will also be important to determine which are transcription factors (TFs) for the GRN building step later.*
@@ -119,12 +119,20 @@ In *WGCNA.R*, a heatmap is also generated to visualise shared co-expression patt
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/module_eigengenes.png"/>
 </p>
 
-#### Step 5: (GRN)
+#### Step 5a: GRN Pre-processing
 The core objective of this pipeline is to construct a Gene Regulatory Network (GRN), which maps regulatory relationships between genes. In this network, transcription factors (TFs) are key regulators that activate or repress target genes. Identifying TFs as hub nodes—those with a high number of connections—can highlight potential pathway initiators. Such TFs may serve as biomarkers of ethoprophos exposure, providing insights into its mechanism of action at the molecular level.
 
 Because the data is temporal, a dynamic gene network inference method was used. DynGENIE3 works with temporal data to build a GRN. This algorithm requires the use of a wrapper doc, available from https://github.com/vahuynh/dynGENIE3.
 
 Pre-processed transcriptomic data is input into DynGENIE3, processed and annotated with Gestalt. Pre-processing_visualization.ipynb -> GRN_pre-processing.ipynb -> dyngenie_trial.R -> DynGENIE3_analysis.R -> process_results.R -> gestalt_pre-processing.ipynb -> GESTALT using online software -> gsea_processing.ipynb -> network_processing.ipynb.
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/GRN_pre-processing.png"/>
+</p>
+
+#### Step 5b: Running the GRN
+
+#### Step 5c: GRN post-processing
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
@@ -138,9 +146,6 @@ Pre-processed transcriptomic data is input into DynGENIE3, processed and annotat
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/alphas_network_img.png"/>
 </p>
 
-<p align="left">
-  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/GRN_pre-processing.png"/>
-</p>
 
 
 Parameter tuning can be run on DynGENIE3 at any point after Pre-processing_visualization.ipynb. The parameter tuning file is parameter_tuning.R.
