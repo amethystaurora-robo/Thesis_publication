@@ -138,6 +138,10 @@ Pre-processed transcriptomic data is input into DynGENIE3, processed and annotat
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/alphas_network_img.png"/>
 </p>
 
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/GRN_pre-processing.png"/>
+</p>
+
 
 Parameter tuning can be run on DynGENIE3 at any point after Pre-processing_visualization.ipynb. The parameter tuning file is parameter_tuning.R.
 TODO: 
