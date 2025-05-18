@@ -120,9 +120,32 @@ In *WGCNA.R*, a heatmap is also generated to visualise shared co-expression patt
 </p>
 
 #### Step 5: (GRN)
+The core objective of this pipeline is to construct a Gene Regulatory Network (GRN), which maps regulatory relationships between genes. In this network, transcription factors (TFs) are key regulators that activate or repress target genes. Identifying TFs as hub nodes—those with a high number of connections—can highlight potential pathway initiators. Such TFs may serve as biomarkers of ethoprophos exposure, providing insights into its mechanism of action at the molecular level.
+
+Because the data is temporal, a dynamic gene network inference method was used. DynGENIE3 works with temporal data to build a GRN. This algorithm requires the use of a wrapper doc, available from https://github.com/vahuynh/dynGENIE3.
+
+Pre-processed transcriptomic data is input into DynGENIE3, processed and annotated with Gestalt. Pre-processing_visualization.ipynb -> GRN_pre-processing.ipynb -> dyngenie_trial.R -> DynGENIE3_analysis.R -> process_results.R -> gestalt_pre-processing.ipynb -> GESTALT using online software -> gsea_processing.ipynb -> network_processing.ipynb.
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
+</p>
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/es_network_img.png"/>
+</p>
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/alphas_network_img.png"/>
+</p>
+
+
+Parameter tuning can be run on DynGENIE3 at any point after Pre-processing_visualization.ipynb. The parameter tuning file is parameter_tuning.R.
 TODO: 
+Make DynGENIE3 workflow and input into readme
+Finish methods and description
 DynGENIE3
 Add versions, requirements include what versions, access to HPC, access to Jupyter notebook
+Make sure abbreviations are defined once only
 Metabolomics section
 MOFA
 
