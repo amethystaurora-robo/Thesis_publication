@@ -124,15 +124,19 @@ The core objective of this pipeline is to construct a Gene Regulatory Network (G
 
 Because the data is temporal, a dynamic gene network inference method was used. DynGENIE3 works with temporal data to build a GRN. This algorithm requires the use of a wrapper doc, available from https://github.com/vahuynh/dynGENIE3.
 
-Pre-processed transcriptomic data is input into DynGENIE3, processed and annotated with Gestalt. Pre-processing_visualization.ipynb -> GRN_pre-processing.ipynb -> dyngenie_trial.R -> DynGENIE3_analysis.R -> process_results.R -> gestalt_pre-processing.ipynb -> GESTALT using online software -> gsea_processing.ipynb -> network_processing.ipynb.
-
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/GRN_pre-processing.png"/>
 </p>
 
 #### Step 5b: Running the GRN
 
-#### Step 5c: GRN post-processing
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN1.png"/>
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN2.png"/>
+</p>
+
+
+#### Step 5c: GRN annotation and post-processing
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
