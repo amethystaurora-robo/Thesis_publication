@@ -122,22 +122,30 @@ In *WGCNA.R*, a heatmap is also generated to visualise shared co-expression patt
 #### Step 5a: GRN Pre-processing
 The core objective of this pipeline is to construct a Gene Regulatory Network (GRN), which maps regulatory relationships between genes. In this network, transcription factors (TFs) are key regulators that activate or repress target genes. Identifying TFs as hub nodes—those with a high number of connections—can highlight potential pathway initiators. Such TFs may serve as biomarkers of ethoprophos exposure, providing insights into its mechanism of action at the molecular level.
 
-Because the data is temporal, a dynamic gene network inference method was used. DynGENIE3 works with temporal data to build a GRN. This algorithm requires the use of a wrapper doc, available from https://github.com/vahuynh/dynGENIE3.
+Because the data is temporal, a dynamic gene network inference method was used. DynGENIE3 works with temporal data to build a GRN. 
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/GRN_pre-processing.png"/>
 </p>
 
+TFs obtained in Step 3 and filtered and normalized transcriptomic data in *rna_vst_proc.csv* are loaded into *GRN_pre-processing.ipynb*. This will put the files into the correct format based on dose levels, and output necessary files including the gene order, in *gene_order.csv*, the list of known TFs in *regulatory_genes.csv*, and the gene expression levels, split into their conditions, in this case titled *control_df.txt*, *low_df.txt* and *high_df.txt*. 
+
 #### Step 5b: Running the GRN
 
+The wrapper doc available from https://github.com/vahuynh/dynGENIE3 will need to be compiled for use in the R file, *dynGENIE3.R*. Weights are saved in files starting with *link_list* and decay rates are stored in files starting with *alphas.* These files are loaded into *DynGENIE3_analysis.R* for filtering, and finally combined in *process_results.R*. 
+
 <p align="left">
-  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN1.png"/>
-  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN2.png"/>
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN1.png?raw=true"/><img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN2.png?raw=true"/>
 </p>
+
+The algorithm DynGENIE3 uses ensembles of regression trees are used to determine strengths of regulatory relationship between each TF and target gene. This model results in a list of weights - the relationship strength, and messenger RNA (mRNA) decay rates. Decay rates mRNA is inferred by applying an exponential decay equation to the time series data. Faster decay rates lead to repression of mRNA transcription, affecting the level of proteins produced and ultimately the pathways which are enriched from these genes19. Focusing on higher decay rates highlights genes which may be responding to cellular stress in this way.
 
 
 #### Step 5c: GRN annotation and post-processing
 
+<p align="center">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN_Annotation1.png?raw=true" width="49%" /><img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN_annotation2.png?raw=true" width="49%" />
+</p>
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
 </p>
@@ -154,8 +162,6 @@ Because the data is temporal, a dynamic gene network inference method was used. 
 
 Parameter tuning can be run on DynGENIE3 at any point after Pre-processing_visualization.ipynb. The parameter tuning file is parameter_tuning.R.
 TODO: 
-Make DynGENIE3 workflow and input into readme
-Finish methods and description
 DynGENIE3
 Add versions, requirements include what versions, access to HPC, access to Jupyter notebook
 Make sure abbreviations are defined once only
