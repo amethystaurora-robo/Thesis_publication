@@ -51,7 +51,7 @@ The outputs of *rna_preproc.r* - *sample_sheet_filtered.csv* and *flt_counts_fil
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_stat_analysis.png"/>
 </p>
 
-DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa. LRT fits a linear model (shown below) with and without the interaction term to determine significantly upregulated and downregulated genes at the interaction of dose and time compared to control.
+DESeq2 is an R library used to identify differentially expressed genes (DEGs) from RNA-seq data. I used DESeq2 version 1.38.3. I used the Likelihood Ratio Test (LRT) to test the significance of the interaction between time and dose — in other words, to determine whether the effect of dose on gene expression changes over time, or vice versa. LRT fits a linear model (shown below) with and without the interaction term to determine significantly upregulated and downregulated genes at the interaction of dose and time compared to control.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/lrt.png"/>
@@ -61,7 +61,7 @@ To interpret these results in detail, I performed Wald tests to identify DEGs at
 
 #### Step 3: Annotation
 
-I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information. For this step, I used KEGG ontology and human orthologs for *Daphnia magna*. These were obtained following the method below.
+I then used WebGestalt’s Gene Set Enrichment Analysis (GSEA) to annotate these DEGs with pathway information. I used Web Gestalt version 2024. For this step, I used KEGG ontology and human orthologs for *Daphnia magna*. These were obtained following the method below.
 
 <p align="left" style="font-size: 16px;">
   1. List of gene names
@@ -107,7 +107,7 @@ Finally, I visualised how these enriched pathways change over time and across do
 #### Step 4: Co-Expression Clustering
 An important aspect of the temporal analysis was grouping genes by their shared co-expression patterns. In other words, these groups of genes are upregulated or downregulated together. This method uses a hierarchical clustering algorithm to group genes into 'modules.'
 
-Normalized and vst transformed genes, in the file *rna_vst_proc.csv* is passed to *WGCNA.r* to assign genes to different modules. This produces an output file, *genes_module_colors.csv* which is passed to *network_processing.ipynb* together with outputs from the GRN for a final visualisation. 
+Normalized and vst transformed genes, in the file *rna_vst_proc.csv* is passed to *WGCNA.r* to assign genes to different modules. This produces an output file, *genes_module_colors.csv* which is passed to *network_processing.ipynb* together with outputs from the GRN for a final visualisation. I used WGCNA version 1.72.517 to perform this analysis.
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_WGCNA.png"/>
@@ -138,17 +138,24 @@ The wrapper doc available from https://github.com/vahuynh/dynGENIE3 will need to
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN1.png?raw=true"/><img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN2.png?raw=true"/>
 </p>
 
-The algorithm DynGENIE3 uses ensembles of regression trees are used to determine strengths of regulatory relationship between each TF and target gene. This model results in a list of weights - the relationship strength, and messenger RNA (mRNA) decay rates. Decay rates mRNA is inferred by applying an exponential decay equation to the time series data. Faster decay rates lead to repression of mRNA transcription, affecting the level of proteins produced and ultimately the pathways which are enriched from these genes19. Focusing on higher decay rates highlights genes which may be responding to cellular stress in this way.
+The algorithm DynGENIE3 uses ensembles of regression trees are used to determine strengths of regulatory relationship between each TF and target gene. This model results in a list of weights - the relationship strength, and messenger RNA (mRNA) decay rates. Decay rates of mRNA are inferred by applying an exponential decay equation to the time series data. Faster decay rates lead to repression of mRNA transcription, affecting the level of proteins produced and ultimately the pathways which are enriched from these genes. Focusing on higher decay rates highlights genes which may be responding to cellular stress in this way.
+
+<p align="left">
+  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
+</p>
+
+DynGENIE3 has two parameters which may be tuned-k and ntrees. I have provided a file, *parameter_tuning.R* to optimize the algorithm for any data. An HPC would be beneficial for running DynGENIE3, but to perform parameter tuning, it will be completely necessary.
 
 
 #### Step 5c: GRN annotation and post-processing
 
+I used Web Gestalt to annotate the results from the GRN with pathway information, in the same process as Step 3. In *network_processing.ipynb*, the annotated genes are merged with modules in *gene_module_colors.csv* from *WGCNA.R*. 
+
 <p align="center">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN_Annotation1.png?raw=true" width="49%" /><img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/workflow_GRN_annotation2.png?raw=true" width="49%" />
 </p>
-<p align="left">
-  <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
-</p>
+
+The merged file *tfs_wgcna.csv* can be loaded into Cytoscape software. Below are two networks I created, annotating with pathways and transcription factor identifiers. The colors represent the co-expression groupings. Cytoscape provides its own network inference methods, by which you can find 'hub nodes'. This will allow for biological interpretation of the results. 
 
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/es_network_img.png"/>
@@ -157,16 +164,6 @@ The algorithm DynGENIE3 uses ensembles of regression trees are used to determine
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/alphas_network_img.png"/>
 </p>
-
-
-
-Parameter tuning can be run on DynGENIE3 at any point after Pre-processing_visualization.ipynb. The parameter tuning file is parameter_tuning.R.
-TODO: 
-DynGENIE3
-Add versions, requirements include what versions, access to HPC, access to Jupyter notebook
-Make sure abbreviations are defined once only
-Metabolomics section
-MOFA
 
 ### Metabolomics
 
