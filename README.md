@@ -140,12 +140,11 @@ The wrapper doc available from https://github.com/vahuynh/dynGENIE3 will need to
 
 The algorithm DynGENIE3 uses ensembles of regression trees are used to determine strengths of regulatory relationship between each TF and target gene. This model results in a list of weights - the relationship strength, and messenger RNA (mRNA) decay rates. Decay rates of mRNA are inferred by applying an exponential decay equation to the time series data. Faster decay rates lead to repression of mRNA transcription, affecting the level of proteins produced and ultimately the pathways which are enriched from these genes. Focusing on higher decay rates highlights genes which may be responding to cellular stress in this way.
 
+DynGENIE3 has two parameters which may be tuned-k and ntrees. I have provided a file, *parameter_tuning.R* to optimize the algorithm for any data. An HPC would be beneficial for running DynGENIE3, but to perform parameter tuning, it will be completely necessary. Additionally, the file *paramter_tuning_visualisation.ipynb* can be used to create the pretty 3D mesh plot below.
+
 <p align="left">
   <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/3dmesh_plot.png"/>
 </p>
-
-DynGENIE3 has two parameters which may be tuned-k and ntrees. I have provided a file, *parameter_tuning.R* to optimize the algorithm for any data. An HPC would be beneficial for running DynGENIE3, but to perform parameter tuning, it will be completely necessary.
-
 
 #### Step 5c: GRN annotation and post-processing
 
@@ -167,7 +166,7 @@ The merged file *tfs_wgcna.csv* can be loaded into Cytoscape software. Below are
 
 ### Metabolomics
 
-
+For this pipeline, the main focus has been transcriptomic data. However, metabolomic data is still analysed using statistical tests. Both omics levels are connected through the use of multi-omics factor analysis (MOFA). 
 
 
 
