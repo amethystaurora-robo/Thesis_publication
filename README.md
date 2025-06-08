@@ -168,6 +168,8 @@ The merged file *tfs_wgcna.csv* can be loaded into Cytoscape software. Below are
 
 For this pipeline, the main focus has been transcriptomic data. However, metabolomic data is still analysed using statistical tests. Both omics levels are connected through the use of multi-omics factor analysis (MOFA). 
 
+####Step 1: Statistical Analysis
 
+####Step 2: Combined Analysis (multi-omics)
 
 
