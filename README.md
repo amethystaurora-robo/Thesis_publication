@@ -170,6 +170,22 @@ For this pipeline, the main focus has been transcriptomic data. However, metabol
 
 #### Step 1: Statistical Analysis
 
+Metabolomic data with metabolites in rows and samples in columns is cleaned, dropping the header and columns with ortholog 
+information to prepare for statistical analysis.
+
+This script performs one-way ANOVA and post-hoc Tukey's HSD tests on positive and negative datasets
+(pos_melted_renamed and neg_melted_renamed) to assess whether there are statistically significant 
+differences in mass measurements across three categorical variables: Condition, Treatment, and Timepoint.
+
+Steps:
+1. Group data by each categorical variable for both positive and negative datasets.
+2. Perform one-way ANOVA to test for overall group differences.
+3. If significant, perform Tukey's HSD to identify specific group differences.
+
+Outputs:
+- F-statistic and p-values from ANOVA
+- Tukey's test results for all pairwise comparisons
+
 #### Step 2: Combined Analysis (multi-omics)
 
 
