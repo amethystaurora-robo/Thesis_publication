@@ -188,4 +188,15 @@ Outputs:
 
 #### Step 2: Combined Analysis (multi-omics)
 
+Multi-omics factor analysis
+
+A statistical framework used to integrate and interpret multiple omics datasets together (e.g., gene expression, methylation, proteomics) by identifying latent factors that explain variation across datasets.
+
+🔍 What MOFA Does:
+Reduces dimensionality across multiple omics layers.
+
+Identifies shared and dataset-specific sources of variation.
+
+Helps to uncover biological signals, sample subgroups, or batch effects.
+
 
