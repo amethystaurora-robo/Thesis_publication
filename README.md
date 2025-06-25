@@ -175,7 +175,7 @@ information to prepare for statistical analysis.
 
 This script performs one-way ANOVA and post-hoc Tukey's HSD tests on positive and negative datasets
 (pos_melted_renamed and neg_melted_renamed) to assess whether there are statistically significant 
-differences in mass measurements across three categorical variables: Condition, Treatment, and Timepoint.
+differences in mass measurements across three categorical variables: Condition (treatment + timepoint), Treatment, and Timepoint.
 
 Steps:
 1. Group data by each categorical variable for both positive and negative datasets.
@@ -186,6 +186,8 @@ Outputs:
 - F-statistic and p-values from ANOVA
 - Tukey's test results for all pairwise comparisons
 
+For my dataset, ANOVA showed statistically significant differences between timepoints and treatments. Tukey's test provided interpretability for specific areas of significance. For my dataset, this showed statistically significant differences between control and high dose ethoprophos in positive ion mode, and between low and high dose ethoprophos in negative ion mode. 7D also showed significant differences with all other timepoints.
+
 #### Step 2: Combined Analysis (multi-omics)
 
 Multi-omics factor analysis is a statistical framework used to integrate omics datasets - in this case, transcriptomic and metabolomic datasets - by identifying latent factors that explain shared variation across datasets. This works to:
@@ -194,11 +196,67 @@ Multi-omics factor analysis is a statistical framework used to integrate omics d
 - Identify shared and dataset-specific sources of variation.
 - Help to uncover biological signals, sample subgroups, or batch effects.
 
+This grouped bar plot summarizes total variance explained for each modality (metabolomic vs transcriptomic) by experimental group.
+
 <p align="left">
 <img src ="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/mofa_variance_explained_bar.png">
+</p>
+
+Key observations:
+
+For the metabolomic layer, variance explained is lower overall and dips in the high group (~40%).
+
+For the transcriptomic layer, all groups show higher explained variance (65–70%), with the low group having the most.
+
+Implications:
+
+MOFA is capturing more structured signal in the transcriptomic data, consistent with the first plot.
+
+The reduced variance in the metabolomic high group could imply more stochasticity or weaker systematic response at the metabolite level under that condition.
+
+This scatter plot shows the distribution of latent factor values for each sample, split by group and factor (1–3).
+
+<p align="left">
 <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/mofa_variance_explained_scatter.png">
+</p>
+
+Key observations:
+
+Factor 1: Samples show group separation, especially between control and low. Low samples skew higher on the factor values, suggesting that this factor may capture differences induced by the low condition.
+
+Factor 2: Also shows separation, especially between control and high, though more overlap is present than in Factor 1.
+
+Factor 3: Less separation among groups; appears more mixed.
+
+Implications:
+
+Factor 1 likely corresponds to the most prominent biological difference in your experiment — possibly the response to the low condition.
+
+Factor 2 may correspond to a secondary response or variation across high vs control.
+
+Factor 3 captures variation that may not correspond cleanly with your experimental groups or could represent batch effects, technical noise, or subtler patterns.
+This heatmap shows variance explained (%) by each factor per data modality (metabolomic / transcriptomic) across experimental groups (control, high, low).
+
+<p align="left">
 <img src="https://github.com/amethystaurora-robo/Thesis_publication/blob/main/Vizzes/mofa_factors.png">
 </p>
+
+Key observations:
+
+Factor 1 explains the most variance across all groups and modalities, especially for the transcriptomic layer in the low group (reaching the maximum color scale of >30%).
+
+Factor 2 is also substantial in both modalities across all groups, but contributes slightly more to the transcriptomic layer.
+
+Higher-order factors (Factor 3–8) explain smaller amounts of variance.
+
+The transcriptomic layer generally has higher variance explained across the board, particularly in the first two factors.
+Implications:
+
+Factors 1 and 2 likely capture the major sources of biological variation. These are likely driving most of the signal in your dataset.
+
+The transcriptome seems more dynamic or responsive to your experimental conditions than the metabolome, given the higher variance explained.
+
+
 
 
 
