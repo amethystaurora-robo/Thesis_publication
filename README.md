@@ -168,6 +168,8 @@ The merged file *tfs_wgcna.csv* can be loaded into Cytoscape software. Below are
 
 For this pipeline, the main focus has been transcriptomic data. However, metabolomic data is still analysed using statistical tests. Both omics levels are connected through the use of multi-omics factor analysis (MOFA). 
 
+This analysis was conducted using metabolite read counts (positive and negative), cleaning and running statistical analysis in metabolomics.ipynb, then pre-processing for MOFA in MOFA_pre-processing.ipynb, and finally running MOFA on metabolite read counts and gene expression read counts in MOFA.R
+
 #### Step 1: Statistical Analysis
 
 Metabolomic data with metabolites in rows and samples in columns is cleaned, dropping the header and columns with ortholog 
