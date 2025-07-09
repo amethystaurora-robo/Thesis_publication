@@ -179,16 +179,8 @@ This script performs one-way ANOVA and post-hoc Tukey's HSD tests on positive an
 (pos_melted_renamed and neg_melted_renamed) to assess whether there are statistically significant 
 differences in mass measurements across three categorical variables: Condition (treatment + timepoint), Treatment, and Timepoint.
 
-Steps:
-1. Group data by each categorical variable for both positive and negative datasets.
-2. Perform one-way ANOVA to test for overall group differences.
-3. If significant, perform Tukey's HSD to identify specific group differences.
-
-Outputs:
-- F-statistic and p-values from ANOVA
-- Tukey's test results for all pairwise comparisons
-
 For my dataset, ANOVA showed statistically significant differences between timepoints and treatments. Tukey's test provided interpretability for specific areas of significance. This showed statistically significant differences between control and high dose ethoprophos in positive ion mode, and between low and high dose ethoprophos in negative ion mode. 7D also showed significant differences with all other timepoints.
+
 
 #### Step 2: Combined Analysis (multi-omics)
 
