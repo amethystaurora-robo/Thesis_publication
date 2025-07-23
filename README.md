@@ -184,7 +184,7 @@ For my dataset, ANOVA showed statistically significant differences between timep
 
 #### Step 2: Combined Analysis (multi-omics)
 
-Multi-omics factor analysis is a statistical framework used to integrate omics datasets - in this case, transcriptomic and metabolomic datasets - by identifying latent factors that explain shared variation across datasets. This works to:
+Multi-omics factor analysis is a statistical framework used to integrate omics datasets by identifying latent factors that explain shared variation across datasets. This works to:
 
 - Reduce dimensionality across multiple omics layers.
 - Identify shared and dataset-specific sources of variation.
@@ -216,7 +216,7 @@ Key observations:
 - Factor 3: Less separation among groups; appears more mixed.
 
 Implications:
-- Factor 1 likely corresponds to the most prominent biological difference in the experiment — possibly the response to the low condition.
+- Factor 1 likely corresponds to the most prominent biological difference in the experiment, possibly the response to the low condition.
 - Factor 2 may correspond to a secondary response or variation across high vs control.
 - Factor 3 captures variation that may not correspond cleanly with experimental groups or could represent batch effects, technical noise, or subtler patterns.
 
